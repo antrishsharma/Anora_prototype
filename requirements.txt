@@ -1,0 +1,11 @@
+pyautogui
+pillow
+openai-whisper
+sounddevice
+numpy
+pyttsx3
+groq
+pycaw
+comtypes
+opencv-python
+pywhatkit
