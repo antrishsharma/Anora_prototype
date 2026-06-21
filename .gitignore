@@ -1,0 +1,17 @@
+# Never commit secrets
+.env
+*.key
+
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+
+# Project-specific
+anora_ss.png
+*.log
+
+# Editor/OS
+.vscode/
+.DS_Store
