@@ -196,50 +196,13 @@ def speak(text):
     del engine
 
 def listen():
+    duration = 5
     samplerate = 16000
-    chunk_duration = 0.5
-    threshold = 0.0008        # pehle 0.01 tha, thoda sensitive kiya
-    silence_limit = 2.0      # pehle 1.5 tha, thoda zyada wait karega
-    min_speech_duration = 0.5
-    
-
-    print("Sun rahi hoon...")
-    time.sleep(0.3)
-
-    frames = []
-    silent_time = 0.0
-    speech_time = 0.0
-    speech_started = False
-
-    while True:
-        chunk = sd.rec(
-            int(chunk_duration * samplerate),
-            samplerate=samplerate,
-            channels=1,
-            dtype='float32'
-        )
-        sd.wait()
-        chunk = np.squeeze(chunk)
-        energy = np.sqrt(np.mean(chunk**2))
-
-        frames.append(chunk)
-        
-
-        if energy > threshold:
-            speech_started = True
-            speech_time += chunk_duration
-            silent_time = 0.0
-        else:
-            if speech_started:
-                silent_time += chunk_duration
-
-        if speech_started and silent_time >= silence_limit and speech_time >= min_speech_duration:
-            break
-
-        if len(frames) * chunk_duration > 10:
-            break
-
-    audio = np.concatenate(frames)
+    print("Sun rahi hoon... (5 sec bolo)")
+    time.sleep(0.5)
+    audio = sd.rec(int(duration * samplerate), samplerate=samplerate, channels=1, dtype='float32')
+    sd.wait()
+    audio = np.squeeze(audio)
     result = whisper_model.transcribe(audio, fp16=False, language="en")
     return result["text"].strip()
 
