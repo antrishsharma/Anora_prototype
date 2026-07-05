@@ -198,9 +198,10 @@ def speak(text):
 def listen():
     samplerate = 16000
     chunk_duration = 0.5
-    silence_limit = 1.5
+    threshold = 0.0008        # pehle 0.01 tha, thoda sensitive kiya
+    silence_limit = 2.0      # pehle 1.5 tha, thoda zyada wait karega
     min_speech_duration = 0.5
-    threshold = 0.01
+    
 
     print("Sun rahi hoon...")
     time.sleep(0.3)
@@ -222,6 +223,7 @@ def listen():
         energy = np.sqrt(np.mean(chunk**2))
 
         frames.append(chunk)
+        
 
         if energy > threshold:
             speech_started = True
